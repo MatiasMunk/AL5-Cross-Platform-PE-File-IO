@@ -457,7 +457,7 @@ void abort_example(char const *format, ...)
 int main(int argc, char* argv[])
 {
 	if (argc < 3) {
-		/*show_usage(argv[0]);*/
+		printf("Usage: ReadPEBmp.exe [pe file] [id]\nFor example :\n\tReadPEBmp.exe gfx025.gf 115");
 		return 1;
 	}
 
