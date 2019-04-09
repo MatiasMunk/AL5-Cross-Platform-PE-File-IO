@@ -14,8 +14,18 @@ write_PE_error write_PE_error_num;
 
 int pack_bmp_pe(const char *pefilename, const char *bmpfilename, uint32_t id)
 {
+	//   ALLEGRO_BITMAP *bmp = NULL;
+	   //bmp = al_load_bitmap(bmpfilename);
+
+	   //if (!bmp) {
+	   //	load_PE_error_num = CREATE_BITMAP_FAILURE;
+	   //	return;
+	   //}
 
 	ALLEGRO_FILE *BMP_file;
+
+
+	//AL_BITMAPINFOHEADER bmp_header;
 
 	uint32_t bmp_file_size;
 
@@ -78,14 +88,14 @@ int add_pefile_bmp_resource(const char *filename, const uint8_t* buffer, uint32_
 
 	PE_file = al_fopen(filename, "rb+");
 	if (!PE_file) {
-		PE_file = al_fopen("peprototype.egf", "rb+");
+		PE_file = al_fopen("peprototype.gf", "rb+");
 		if (!PE_file) {
 			write_PE_error_num = PE_FILE_NOT_FOUND;
 			return -1;
 		}
 	}
 
-	PE_tempfile = al_fopen("~egf.tmp", "wb+");
+	PE_tempfile = al_fopen("~gf.tmp", "wb+");
 	if (!PE_tempfile) {
 		write_PE_error_num = MALLOC_FAILURE;
 		al_fclose(PE_file);
@@ -117,7 +127,7 @@ int add_pefile_bmp_resource(const char *filename, const uint8_t* buffer, uint32_
 		write_PE_error_num = NO_PE_HEADER;
 		al_fclose(PE_tempfile);
 		al_fclose(PE_file);
-		remove("~egf.tmp");
+		remove("~gf.tmp");
 		return -1;
 	}
 
@@ -143,7 +153,7 @@ int add_pefile_bmp_resource(const char *filename, const uint8_t* buffer, uint32_
 		write_PE_error_num = RSRC_NOT_LOCATED;
 		al_fclose(PE_tempfile);
 		al_fclose(PE_file);
-		remove("~egf.tmp");
+		remove("~gf.tmp");
 		return -1;
 	}
 
@@ -161,7 +171,7 @@ int add_pefile_bmp_resource(const char *filename, const uint8_t* buffer, uint32_
 		write_PE_error_num = MALLOC_FAILURE;
 		al_fclose(PE_tempfile);
 		al_fclose(PE_file);
-		remove("~egf.tmp");
+		remove("~gf.tmp");
 		return -1;
 
 	}
@@ -488,7 +498,7 @@ int add_pefile_bmp_resource(const char *filename, const uint8_t* buffer, uint32_
 	al_fclose(PE_tempfile);
 	al_fclose(PE_file);
 
-	remove("~egf.tmp");
+	remove("~gf.tmp");
 
 	for (n = 0; n < header.root.NumberOfNamedEntries + header.root.NumberOfIdEntries; n++) {
 
@@ -881,6 +891,7 @@ void abort_example(char const *format, ...)
 int main(int argc, char* argv[])
 {
 	if (argc < 4) {
+		printf("Usage: WritePEBmp.exe [pe file] [bitmap file] [id]\nFor example :\n\tWritePEBmp.exe gfx025.gf 115.bmp 115");
 		return 1;
 	}
 
@@ -901,4 +912,3 @@ int main(int argc, char* argv[])
 
 	return 0;
 }
-
